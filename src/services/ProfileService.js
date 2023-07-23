@@ -12,6 +12,7 @@ class ProfileService {
     AppState.activeProfile = profile
   }
 
+
 }
 export const profileService = new ProfileService()
 

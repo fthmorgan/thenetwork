@@ -7,6 +7,7 @@
       <div>
         <h1>{{ profile.name }}</h1>
         <h2>{{ profile.bio }}</h2>
+        <h1>{{ page }}</h1>
         <h3></h3>
       </div>
     </div>
@@ -23,7 +24,7 @@
       <button @click="changePage(older)" :disabled="!older" class="btn btn-info" >
               Older <span class="badge bg-primary"><i class="mdi mdi-page-previous-outline"></i></span>
       </button>
-      <button @click="changePage(newer)" class="btn btn-info" >
+      <button @click="changePage(newer)" :disabled="!newer" class="btn btn-info" >
               Newer <span class="badge bg-primary"><i class="mdi mdi-page-next-outline"></i></span>
       </button>
     </div>
@@ -77,11 +78,14 @@ onMounted(() => {
       profilePosts: computed(() => AppState.posts),
       older: computed(() => AppState.older),
       newer: computed(() => AppState.newer),
+      page: computed(() => AppState.page),
 
-      async changePage(url) {
+      async changePage(page) {
 try {
-  // logger.log('[CHANGE PAGE]', url)
-  await postsService.changePage(url)
+  const profileId = route.params.profileId
+  const urlProfile = `api/posts?creatorId=${profileId}&page=${page}`
+  logger.log('[CHANGE PAGE]', urlProfile, profileId, page)
+  await postsService.changePage(urlProfile, profileId, page)
 } catch (error) {
   Pop.error(error.message)
 }

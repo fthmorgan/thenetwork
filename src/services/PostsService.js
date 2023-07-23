@@ -14,6 +14,7 @@ class PostsService {
 
     AppState.newer = res.data.newer
     AppState.older = res.data.older
+    AppState.page = res.data.page
   }
 
   async getProfilePosts(profileId) {
@@ -30,12 +31,23 @@ class PostsService {
 
   async changePage(url) {
     const res = await api.get(url)
-    logger.log('[CHANGING PAGE]')
+    logger.log('[CHANGING PAGE]', url)
     AppState.newer = res.data.newer
     AppState.older = res.data.older
 
-    const profilePosts = res.data.posts.map(postPojo => new Post(postPojo))
-    AppState.posts = profilePosts
+    const posts = res.data.posts.map(postPojo => new Post(postPojo))
+    AppState.posts = posts
+
+  }
+  async changeProfilePage(urlProfile, profileId, page) {
+    const res = await api.get(urlProfile, profileId, page)
+    logger.log('[CHANGING PAGE]', profileId, page)
+    AppState.newer = res.data.newer
+    AppState.older = res.data.older
+    AppState.page = res.data.page
+
+    const posts = res.data.posts.map(postPojo => new Post(postPojo))
+    AppState.profilePosts = posts
 
   }
 
