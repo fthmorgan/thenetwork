@@ -3,7 +3,7 @@
     <Navbar />
   </header>
   <main>
-    <form v-if="account.id" @submit.prevent="createPost()">
+    <form v-if="account.id" @submit.prevent="handleSubmit()" class="mt-3 mb-3 bg-white p-4 elevation rounded">
             <div>
               <textarea v-model="editable.body" class="form-control" placeholder="Add Your Post"
                 id="body" style="height: 100px"></textarea>
@@ -20,7 +20,7 @@
     <router-view />
     <div class="container-fluid">
         <div class="row" v-for="ad in ads" :key="ad.banner">
-          <img :src="ad.banner">
+          <img class="img-fluid p-0" :src="ad.banner">
         </div>
     </div>
   </main>
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watchEffect } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
 import { postsService } from "./services/PostsService.js"
@@ -54,11 +54,31 @@ const editable = ref({})
       getAds();
     });
 
+    watchEffect(() => {
+      if (AppState.activePost) {
+        const postWithBrokenReference = { ...AppState.activePost }
+        editable.value = postWithBrokenReference
+      }
+    })
+
+
     return {
       editable,
+
       appState: computed(() => AppState),
       account: computed(() => AppState.account),
       ads: computed(() => AppState.ads),
+
+handleSubmit() {
+        if (editable.value.id) {
+
+          this.editPost()
+        }
+        else {
+          this.createPost()
+        }
+      },
+
 
             async createPost() {
         try {
@@ -68,7 +88,20 @@ const editable = ref({})
         } catch (error) {
           Pop.error(error)
         }
-      }
+      },
+
+      async editPost() {
+        try {
+          const postData = editable.value
+
+          await postsService.editPost(postData)
+
+          editable.value = {}
+
+        } catch (error) {
+          Pop.error(error.message)
+        }
+      },
     }
   },
   components: { Navbar }

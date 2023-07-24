@@ -6,5 +6,9 @@ export class Profile {
     this.coverImg = data.coverImg
     this.bio = data.bio
     this.linkedin = data.linkedin
+    this.github = data.github
+    this.class = data.class
+    this.graduated = data.graduated ? 'Graduated 🎓' : 'Not Graduated 🎓';
   }
+
 }

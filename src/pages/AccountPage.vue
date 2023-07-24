@@ -9,8 +9,12 @@
   <label for="name" class="form-label">Name</label>
   <input v-model="editable.name" type="text" class="form-control"  id="name" placeholder="">
 </div>
+<div class="mb-3">
+  <label for="picture" class="form-label">ImgUrl</label>
+  <input v-model="editable.picture" type="text" class="form-control"  id="picture" placeholder="">
+</div>
 <div>
-    <button type="submit" class="btn btn-primary">Update Profile</button>
+    <button type="submit" class="btn btn-primary mb-4">Update Profile</button>
 </div>
   </form>
 </template>

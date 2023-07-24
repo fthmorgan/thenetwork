@@ -7,7 +7,7 @@
 
         </div>
       </div>
-          <div class="d-flex justify-content-between">
+          <div class="d-flex justify-content-between mt-3 mb-3">
       <button :disabled="!older" @click="changePage(older)" class="btn btn-info" >
               Older  <span class="badge bg-primary"><i class="mdi mdi-page-previous-outline"></i></span>
       </button>

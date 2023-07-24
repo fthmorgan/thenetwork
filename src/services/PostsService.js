@@ -74,7 +74,12 @@ class PostsService {
     const res = await api.put(`api/posts/${postData.id}`, postData)
 
     logger.log('[EDITED POST]', res.data)
-    // FIXME finish adding to Appstate
+
+    const post = new Post(res.data)
+
+    const postIndex = AppState.posts.findIndex(post => post.id == postData.id)
+
+    AppState.posts.splice(postIndex, 1, post)
   }
 
   setPostToEdit(postToEdit) {

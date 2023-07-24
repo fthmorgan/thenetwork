@@ -1,29 +1,22 @@
 <template>
   <div class="container-fluid" v-if="profile">
     <div class="row">
-      <div class="col-12">
+      <div class="col-12 mt-3 p-0">
         <img class="img-fluid" :src="profile.coverImg" :alt="profile.name">
       </div>
       <div>
-        <form v-if="account.id" @submit.prevent="createPost()">
-            <div>
-              <textarea v-model="editable.body" class="form-control" placeholder="Add Your Post"
-                id="body" style="height: 100px"></textarea>
-              <label for="body">Post</label>
-            </div>
-            <div>
-              <input v-model="editable.imgUrl" required type="url" class="form-control" id="imgUrl"
-                placeholder="ImgUrl...">
-              <label for="imgUrl">ImgUrl</label>
-            </div>
-            <button type="submit" class="btn btn-outline-primary">Post</button>
-            
-        </form>
       </div>
       <div>
-        <h1>{{ profile.name }}</h1>
-        <h2>{{ profile.bio }}</h2>
-        <h3></h3>
+        <div class="d-flex align-items-center mb-3 mt-3 justify-content-center">
+          <img class="image-fluid profileImg" :src="profile.picture">
+          <h1 class="profileName">{{ profile.name }}</h1>
+        </div>
+        <p>{{ profile.bio }}</p>
+        <a :href="profile.linkedin"><i class="mdi mdi-linkedin fs-1"></i></a>
+        <a :href="profile.github"><i class="mdi mdi-github fs-1"></i></a>
+        <h3> {{ profile.graduated }}</h3>
+        <h4> {{ profile.class }}</h4>
+
       </div>
     </div>
     <div class="row">
@@ -127,5 +120,15 @@ onMounted(() => {
 
 
 <style lang="scss" scoped>
+.profileImg {
+  height: 10vh;
+  width: 10vh;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
 
+.profileName {
+  margin-left: 10px;
+}
 </style>
