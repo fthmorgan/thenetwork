@@ -23,7 +23,7 @@ export const AppState = reactive({
 
   older: null,
 
-  page: 0,
+  page: 1,
 
   ads: []
 

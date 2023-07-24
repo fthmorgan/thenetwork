@@ -20,16 +20,22 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-3 card" v-for="post in profilePosts" :key="post.id" >
-        <h1>{{ post.creator.name }}</h1>
-        <h3>{{ post.body }}</h3>
-        
+      <div class="col-5 card" v-for="post in profilePosts" :key="post.id" >
+        <div class="d-flex">
+          <h3 class="mt-3">{{ post.creator.name }}</h3>
+          <img class="img-fluid profileImg mt-3 mb-3" :src="post.creator.picture">
+        </div>
+        <h5>{{ post.body }}</h5>
+      <div>
+      <h4>{{ post.createdAt.toLocaleDateString() }}</h4>
+      <h5><i class="mdi mdi-heart-outline fs-3"></i>{{ post.likes.length }}</h5>
+    </div>
       </div>
     </div>
     <div>
       
-      <h1>{{ page }}</h1>
-    <div class="d-flex justify-content-between">
+      <h1>Page: {{ page }}</h1>
+    <div class="d-flex justify-content-between mb-3">
       <button @click="changePage(older)" :disabled="!older" class="btn btn-info" >
               Older <span class="badge bg-primary"><i class="mdi mdi-page-previous-outline"></i></span>
       </button>

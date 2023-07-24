@@ -70,6 +70,13 @@ class PostsService {
     AppState.posts.splice(postIndex, 1)
   }
 
+  async likePost(postId) {
+    const res = await api.put(`/api/posts/${postId}/like`)
+    logger.log('[LIKED POST]', res.data)
+
+
+  }
+
   async editPost(postData) {
     const res = await api.put(`api/posts/${postData.id}`, postData)
 

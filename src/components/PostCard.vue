@@ -11,7 +11,7 @@
     </div>
     <div>
       <h4>{{ postProp.createdAt.toLocaleDateString() }}</h4>
-      <h5><i class="mdi mdi-heart-outline fs-3"></i>{{ postProp.likes.length }}</h5>
+      <h5><i @click="likePost()" class="mdi mdi-heart-outline fs-3"></i>{{ postProp.likes.length }}</h5>
     </div>
 
     <div v-if="account.id == postProp.creatorId">
@@ -66,6 +66,16 @@ const editable = ref({})
         }
       },
 
+      async likePost() {
+        try {
+          const postId = props.postProp.id
+          await postsService.likePost(postId)
+          logger.log(postId)
+        } catch (error) {
+          Pop.error(error.message)
+        }
+      },
+
 
         setPostToEdit() {
         const postToEdit = props.postProp
@@ -73,7 +83,7 @@ const editable = ref({})
         postsService.setPostToEdit(postToEdit)
       }
 
-      
+
 
     }
   }
