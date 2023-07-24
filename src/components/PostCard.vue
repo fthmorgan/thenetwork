@@ -1,9 +1,9 @@
 <template>
     <h2>{{ postProp.body }}</h2>
-    <img class="img-fluid" :src="postProp.imgUrl">
-    <div class="d-flex">
-      <h3 class="mx-3">{{ postProp.creator.name }}</h3>
-
+    <img class="img-fluid rounded" :src="postProp.imgUrl">
+    <div class="d-flex justify-content-center mt-3">
+      <h3 class="mx-3 mt-2">{{ postProp.creator.name }}</h3>
+      
       <router-link :to="{name: 'Profile', params: {profileId: postProp.creatorId}}">
         <img class="creatorPicture" :src="postProp.creator.picture" :alt="postProp.creator.name">
       </router-link>
@@ -15,13 +15,15 @@
     </div>
 
     <div v-if="account.id == postProp.creatorId">
-      <button @click="removePost()" class="btn btn-danger" title="Delete this post" type="button">
-            <i class="mdi mdi-delete"></i>
-      </button>
-
-      <button @click="setPostToEdit()" class="btn btn-info ms-3" title="Edit post" type="button">
-          <i class="mdi mdi-pencil"></i>
-      </button>
+      <div class="mt-1 mb-3 d-flex justify-content-end">
+        <button @click="removePost()" class="btn btn-danger" title="Delete this post" type="button">
+              <i class="mdi mdi-delete"></i>
+        </button>
+  
+        <button @click="setPostToEdit()" class="btn btn-info ms-3" title="Edit post" type="button">
+            <i class="mdi mdi-pencil"></i>
+        </button>
+      </div>
     </div>
 
 </template>
@@ -64,18 +66,6 @@ const editable = ref({})
         }
       },
 
-  async editPost() {
-        try {
-          const postData = editable.value
-
-          await postsService.editPost(postData)
-
-          editable.value = {}
-
-        } catch (error) {
-          Pop.error(error.message)
-        }
-      },
 
         setPostToEdit() {
         const postToEdit = props.postProp
@@ -83,6 +73,7 @@ const editable = ref({})
         postsService.setPostToEdit(postToEdit)
       }
 
+      
 
     }
   }
