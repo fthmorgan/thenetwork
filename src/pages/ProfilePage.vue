@@ -12,8 +12,9 @@
           <h1 class="profileName">{{ profile.name }}</h1>
         </div>
         <p>{{ profile.bio }}</p>
-        <a :href="profile.linkedin"><i class="mdi mdi-linkedin fs-1"></i></a>
-        <a :href="profile.github"><i class="mdi mdi-github fs-1"></i></a>
+
+        <a v-if="profile.linkedin" :href="profile.linkedin"><i class="mdi mdi-linkedin fs-1"></i></a>
+        <a v-if="profile.github" :href="profile.github"><i class="mdi mdi-github fs-1"></i></a>
         <h3> {{ profile.graduated }}</h3>
         <h4> {{ profile.class }}</h4>
 
@@ -36,10 +37,10 @@
       
       <h1>Page: {{ page }}</h1>
     <div class="d-flex justify-content-between mb-3">
-      <button @click="changePage(older)" :disabled="!older" class="btn btn-info" >
+      <button @click="changeProfilePage(older)" :disabled="!older" class="btn btn-info" >
               Older <span class="badge bg-primary"><i class="mdi mdi-page-previous-outline"></i></span>
       </button>
-      <button @click="changePage(newer)" :disabled="!newer" class="btn btn-info" >
+      <button @click="changeProfilePage(newer)" :disabled="!newer" class="btn btn-info" >
               Newer <span class="badge bg-primary"><i class="mdi mdi-page-next-outline"></i></span>
       </button>
     </div>
@@ -99,12 +100,12 @@ onMounted(() => {
       newer: computed(() => AppState.newer),
       page: computed(() => AppState.page),
 
-      async changePage(page) {
+      // FIXME this is currently calling to our service request that changes the home page, not our profile page method.
+      async changeProfilePage(page) {
   try {
   const profileId = route.params.profileId
-  const urlProfile = `api/posts?creatorId=${profileId}&page=${page}`
-  logger.log('[CHANGE PAGE]', urlProfile, profileId, page)
-  await postsService.changePage(urlProfile, profileId, page)
+  logger.log('[CHANGE PAGE HERE]', profileId, page)
+  await postsService.changePage(page)
 } catch (error) {
   Pop.error(error.message)
 }

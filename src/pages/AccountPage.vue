@@ -10,9 +10,33 @@
   <input v-model="editable.name" type="text" class="form-control"  id="name" placeholder="">
 </div>
 <div class="mb-3">
-  <label for="picture" class="form-label">ImgUrl</label>
-  <input v-model="editable.picture" type="text" class="form-control"  id="picture" placeholder="">
+  <label for="picture" class="form-label">Profile Picture</label>
+  <input v-model="editable.picture" type="url" class="form-control"  id="picture" placeholder="">
 </div>
+<div class="mb-3">
+  <label for="coverImg" class="form-label">Profile Cover Picture</label>
+  <input v-model="editable.coverImg" type="url" class="form-control"  id="coverImg" placeholder="">
+</div>
+<div>
+  <label for="bio">Bio</label>
+  <textarea v-model="editable.bio" class="form-control" placeholder="Add Your Bio"
+    id="bio" style="height: 100px">
+  </textarea>
+</div>
+<div class="mb-3">
+  <label for="linkedin" class="form-label">LinkedIn</label>
+  <input v-model="editable.linkedin" type="url" class="form-control"  id="linkedin" placeholder="">
+</div>
+<div class="mb-3">
+  <label for="github" class="form-label">Github</label>
+  <input v-model="editable.github" type="url" class="form-control"  id="github" placeholder="">
+</div>
+<div class="mb-3">
+  <label for="class" class="form-label">Graduating Class Year</label>
+  <input v-model="editable.class" type="text" class="form-control"  id="class" placeholder="">
+</div>
+<input type="checkbox" id="graduated" v-model="editable.graduated" />
+<label for="graduated">Graduated</label>
 <div>
     <button type="submit" class="btn btn-primary mb-4">Update Profile</button>
 </div>

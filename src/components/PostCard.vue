@@ -9,20 +9,23 @@
       </router-link>
 
     </div>
-    <div>
-      <h4>{{ postProp.createdAt.toLocaleDateString() }}</h4>
-      <h5><i @click="likePost()" class="mdi mdi-heart-outline fs-3"></i>{{ postProp.likes.length }}</h5>
-    </div>
 
-    <div v-if="account.id == postProp.creatorId">
-      <div class="mt-1 mb-3 d-flex justify-content-end">
-        <button @click="removePost()" class="btn btn-danger" title="Delete this post" type="button">
-              <i class="mdi mdi-delete"></i>
-        </button>
+    <div class="">
+      <div>
+        <h4>{{ postProp.createdAt.toLocaleDateString() }}</h4>
+        <button :disabled="!account.id" class="btn btn-light mb-3"><i @click="likePost()" class="mdi mdi-heart-outline fs-3 selectable"></i>{{ postProp.likes.length }}</button>
+      </div>
   
-        <button @click="setPostToEdit()" class="btn btn-info ms-3" title="Edit post" type="button">
-            <i class="mdi mdi-pencil"></i>
-        </button>
+      <div v-if="account.id == postProp.creatorId">
+        <div class="mt-1 mb-3 d-flex justify-content-end">
+          <button @click="removePost()" class="btn btn-danger" title="Delete this post" type="button">
+                <i class="mdi mdi-delete"></i>
+          </button>
+    
+          <button @click="setPostToEdit()" class="btn btn-info ms-3" title="Edit post" type="button">
+              <i class="mdi mdi-pencil"></i>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -44,7 +47,7 @@ props: {
 
   setup(props){
 
-const editable = ref({})
+// const editable = ref({})
 
     return {
 

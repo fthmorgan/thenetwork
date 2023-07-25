@@ -11,6 +11,14 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
+
+         <ul class="navbar-nav me-auto">
+        <li>
+          <router-link :to="{ name: 'Search' }" class="btn text-success lighten-30 selectable text-uppercase">
+            Search
+          </router-link>
+        </li>
+      </ul>
       <!-- LOGIN COMPONENT HERE -->
       <Login />
     </div>

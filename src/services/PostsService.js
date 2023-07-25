@@ -27,6 +27,7 @@ class PostsService {
 
     const profilePosts = res.data.posts.map(postPojo => new Post(postPojo))
     AppState.posts = profilePosts
+    AppState.older = res.data.older
   }
 
   async changePage(url) {
@@ -39,9 +40,11 @@ class PostsService {
     AppState.posts = posts
 
   }
-  async changeProfilePage(urlProfile, profileId, page) {
-    const res = await api.get(urlProfile, profileId, page)
-    logger.log('[CHANGING PAGE]', profileId, page)
+  async changeProfilePage(profileId, page) {
+    logger.log('before req', profileId, page)
+    // TODO pass in the url from the profile response (newer/older)
+    const res = await api.get(profileId, page)
+    logger.log('[CHANGING PROFILE PAGE]', res.data)
     AppState.newer = res.data.newer
     AppState.older = res.data.older
     AppState.page = res.data.page
@@ -71,10 +74,12 @@ class PostsService {
   }
 
   async likePost(postId) {
-    const res = await api.put(`/api/posts/${postId}/like`)
+    const res = await api.post(`/api/posts/${postId}/like`)
     logger.log('[LIKED POST]', res.data)
 
+    const post = new Post(res.data)
 
+    AppState.posts.push(post)
   }
 
   async editPost(postData) {
@@ -92,6 +97,16 @@ class PostsService {
   setPostToEdit(postToEdit) {
     AppState.activePost = postToEdit
     logger.log('[SET TO EDIT]', AppState.activePost)
+  }
+
+  async getPostsByQuery(queryObject) {
+    const res = await api.get(`/api/posts?query=${queryObject.query}`)
+
+    logger.log('[GOT POSTS WITH QUERY]', res.data)
+
+    const posts = res.data.posts.map(postPojo => new Post(postPojo))
+
+    AppState.posts = posts
   }
 
 }
